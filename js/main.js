@@ -1,5 +1,3 @@
 $(document).ready(function() {
-  $('.flexslider').flexslider({
-    animation: "slide"
-  });
+  Reveal.initialize();
 });

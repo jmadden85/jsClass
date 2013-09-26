@@ -1,33 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
-        <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>Javascriptus</title>
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/flexslider.css">
+        <link rel="stylesheet" href="css/reveal.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <!-- Place somewhere in the <body> of your page -->
-        <div class="flexslider">
-            <ul class="slides">
-                <li>
-                    <h2>test</h2>
-                </li>
-                <li>
-                    <h2>test 1</h2>
-                </li>
-                <li>
-                    <h2>test 2</h2>
-                </li>
-                <li>
-                    <h2>test 3</h2>
-                </li>
-            </ul>
+        <div class="reveal">
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1>javaScript !== $</h1>
+                </section>
+
+                <section>
+                    <h2>Javascript tips</h2>
+                </section>
+
+                <section>
+                    <section>
+                        <p>Always use curly brackets with conditionals</p>
+                        <pre>
+                            if ( juan )
+                            deleteCode();
+                            startOver();
+                        </pre>
+                    </section>
+                    <section>
+                        <pre>
+                            if ( juan ) {
+                                deleteCode();
+                            }
+                            startOver();
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Eval is evil</h2>
+                        <p>Eval passes a string to the javascript compiler and executes the result.</p>
+                        <p>Eval is consistantly misused, usually by dummies and ignoramuses.</p>
+                    </section>
+                    <section>
+                        <h2>For example</h2>
+                        <p>Little Billy wants to add a new property to his object.  He wants his app to ascertain the user's dad's favorite food, and create a new property with that food.</p>
+                        <p>Billy is familiar enough with dot notation to know that if he tries to create a new property with the variable, it will create a property with the variable name instead of it's value.  Billy is not familiar with the subscript operator a.k.a. bracket notation.  Billy decides to use eval instead of google.</p>
+                        <pre>
+                            var myObj = {};
+                            var thisKey = document.getElementById('dadsFaveFood').value;
+                            eval('dynamicProp = myObj.' + thisKey + ';');
+                        </pre>
+                        <p>The correct way to dynamically create properties is with the subscript operator.</p>
+                        <pre>
+                            myObj[thisKey];
+                        </pre>
+                    </section>
+                    <section>
+                        <p>Not only is the eval option a disgusting sight to behold, it's significantly slower because it has to run the compiler to execute.  It's also a big security risk, what if your user's dad's favorite food happens to be window.location = 'http://trojan.notthecondoms.com'.  Now he's got a virus.</p>
+                    </section>
+                    <section>
+                        <p>The Function constructor is another form of eval, this should be avoided.  setTimeout and setInterval can be passed a string or a function, when passed a string they are another form of eval, this should also be avoided (plus it's stupid and I can't ever think of a useful scenario for it).</p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Leave (most of) your shit out of the global namespace.</h2>
+                    </section>
+                    <section>
+                        <p>The global namespace is like a parking lot, each program gets one spot.</p>
+                    </section>
+                    <section>
+                        <p>When you park your car, you don't take all the shit in your car and throw it all over the parking lot, you keep it in your car.</p>
+                    </section>
+                    <section>
+                        <p>With everything in your car, you always know where it is.  You can tell other programs where you parked so they can get shit out of your car when they need it.</p>
+                    </section>
+                    <section>
+                        <p>Parking in multiple spots just makes you look like a dick, and increases the chance of a collision that can shut the whole lot down.</p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Understand hoisting</h2>
+                    </section>
+                    <section>
+                        <p>Javascript variables are moved to the top of the scope they were declared in.</p>
+                    </section>
+                    <section>
+                        <p>This can cause some strange problems if you aren't careful.</p>
+                        <pre>
+                            function isFastest (car, others) {
+                                var fastest = 0;
+                                for ( var i = 0, n = others.length; i < n; i++ ) {
+                                    var car = others[i];
+                                    if ( car.speed > fastest ) {
+                                        fastest = car.speed;
+                                    }
+                                }
+                                return car.speed > fastest;
+                            }
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Function statements can be confusing</h2>
+                    </section>
+                    <section>
+                        <p>The function statement is shorthand for a var statement with a function value.  This can be confusing, and for consistency/understandability purposes I recommend always using the var format.</p>
+                    </section>
+                    <section>
+                        <pre>
+                            function foo () {
+                                return this;
+                            };
+                        </pre>
+                        <p>This is the same as.</p>
+                        <pre>
+                            var foo = function () {
+                                return this;
+                            };
+                        </pre>
+                    </section>
+                </section>
+
+            </div>
         </div>
 
         <script src="js/jquery.min.js"></script>
-        <script src="js/jquery.flexslider-min.js"></script>
+        <script src="js/reveal.min.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>
