@@ -22,19 +22,87 @@
 
                 <section>
                     <section>
+                        <h2>Understand scope</h2>
+                    </section>
+                    <section>
+                        <p>When javascript is being executed, an execution context (a.k.a. scope) is created.  The scope defines the environment in which the code is to be executed.</p>
+                    </section>
+                    <section>
+                        <p>Each execution context has a scope chain.  The global object contains all of the global variables and functions available in javascript.  The activation object is created and initialized when a function is executed.  The activation object contains values this, arguments, named arguments, and any variables local to the function.</p>
+                    </section>
+                    <section>
+                        <p>On page load a global scope is created.  Additional scopes are created as functions are executed.  This execution context stack's topmost scope is the active one or activation object.</p>
+                    </section>
+                    <section>
+                        <pre>
+    function add (num1, num2) {
+        return num1 + num2;
+    };
+    var result = add(5, 10);
+                        </pre>
+                        <div class="scopeBox">
+                            <h3>Execution Context</h3>
+                            <p>Scope Chain</p>
+                        </div>
+                        <div class="scopeBox">
+                            <h3>Scope Chain</h3>
+                            <p>0</p>
+                            <p>1</p>
+                        </div>
+                        <div class="stack">
+                            <div class="scopeBox">
+                                <h3>Activation Object</h3>
+                                <div class="row">
+                                    <p class="one">this</p>
+                                    <p>(global)</p>
+                                </div>
+                                <div class="row">
+                                    <p class="one">arguments</p>
+                                    <p>[5,10]</p>
+                                </div>
+                                <div class="row">
+                                    <p class="one">num1</p>
+                                    <p>5</p>
+                                </div>
+                                <div class="row">
+                                    <p class="one">num2</p>
+                                    <p>10</p>
+                                </div>
+                            </div>
+                            <div class="scopeBox">
+                                <h3>Global Object</h3>
+                                <div class="row">
+                                    <p class="one">this</p>
+                                    <p>(global)</p>
+                                </div>
+                                <div class="row">
+                                    <p class="one">add</p>
+                                    <p>function</p>
+                                </div>
+                                <div class="row">
+                                    <p class="one">result</p>
+                                    <p>undefined</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
                         <p>Always use curly brackets with conditionals</p>
                         <pre>
-                            if ( juan )
-                            deleteCode();
-                            startOver();
+    if ( juan )
+    deleteCode();
+    startOver();
                         </pre>
                     </section>
                     <section>
                         <pre>
-                            if ( juan ) {
-                                deleteCode();
-                            }
-                            startOver();
+    if ( juan ) {
+        deleteCode();
+    }
+    startOver();
                         </pre>
                     </section>
                 </section>
@@ -50,9 +118,9 @@
                         <p>Little Billy wants to add a new property to his object.  He wants his app to ascertain the user's dad's favorite food, and create a new property with that food.</p>
                         <p>Billy is familiar enough with dot notation to know that if he tries to create a new property with the variable, it will create a property with the variable name instead of it's value.  Billy is not familiar with the subscript operator a.k.a. bracket notation.  Billy decides to use eval instead of google.</p>
                         <pre>
-                            var myObj = {};
-                            var thisKey = document.getElementById('dadsFaveFood').value;
-                            eval('dynamicProp = myObj.' + thisKey + ';');
+    var myObj = {};
+    var thisKey = document.getElementById('dadsFaveFood').value;
+    eval('dynamicProp = myObj.' + thisKey + ';');
                         </pre>
                         <p>The correct way to dynamically create properties is with the subscript operator.</p>
                         <pre>
@@ -60,7 +128,7 @@
                         </pre>
                     </section>
                     <section>
-                        <p>Not only is the eval option a disgusting sight to behold, it's significantly slower because it has to run the compiler to execute.  It's also a big security risk, what if your user's dad's favorite food happens to be window.location = 'http://trojan.notthecondoms.com'.  Now he's got a virus.</p>
+                        <p>Not only is the eval option a disgusting sight to behold, it's significantly slower because it has to run the compiler to execute.  It's also a big security risk, what if your user's dad's favorite food happens to be window.location = 'http://trojan.notthecondoms.com'.</p>
                     </section>
                     <section>
                         <p>The Function constructor is another form of eval, this should be avoided.  setTimeout and setInterval can be passed a string or a function, when passed a string they are another form of eval, this should also be avoided (plus it's stupid and I can't ever think of a useful scenario for it).</p>
@@ -95,17 +163,25 @@
                     <section>
                         <p>This can cause some strange problems if you aren't careful.</p>
                         <pre>
-                            function isFastest (car, others) {
-                                var fastest = 0;
-                                for ( var i = 0, n = others.length; i < n; i++ ) {
-                                    var car = others[i];
-                                    if ( car.speed > fastest ) {
-                                        fastest = car.speed;
-                                    }
-                                }
-                                return car.speed > fastest;
-                            }
+    var isFastest = function (car, others) {
+        var fastest = 0;
+        for ( var i = 0, n = others.length; i < n; i++ ) {
+            var car = others[i];
+            if ( car.speed > fastest ) {
+                fastest = car.speed;
+            }
+        }
+        return car.speed > fastest;
+    };
                         </pre>
+                    </section>
+                    <section>
+                        <h2>Think of hoisting as two parts, declaration &amp; assignment.</h2>
+                        <p>Due to the function scoping nature of javascript, all variables are "declared" at the top of their function.</p>
+                        <p>When the variable is actually needed/used, it is assigned.</p>
+                    </section>
+                    <section>
+                        <p>In an effort to combat issues arising from this, some developers recommend declaring all variables at the top of the function.</p>
                     </section>
                 </section>
 
@@ -118,17 +194,157 @@
                     </section>
                     <section>
                         <pre>
-                            function foo () {
-                                return this;
-                            };
+    function foo () {
+        return this;
+    };
                         </pre>
                         <p>This is the same as.</p>
                         <pre>
-                            var foo = function () {
-                                return this;
-                            };
+    var foo = function () {
+        return this;
+    };
                         </pre>
                     </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Use IIFE to create local scope</h2>
+                        <p>Immidiately Invoked Function Expressions</p>
+                    </section>
+                    <section>
+                        <p>IIFEs are good for keeping your shit out of the global scope.  They also come in handy when javascript's lack of block scoping causes you problems.</p>
+                    </section>
+                    <section>
+                        <pre>
+    var wrapEm = function (a) {
+        var results = [];
+        var i, n;
+        for ( i = 0, n = a.length; i < n; i++ ) {
+            results[i] = function() {
+                return a[i];
+            };
+        }
+        return results;
+    };
+    var wrapped = wrapEm([1, 2, 3, 4, 5]);
+    var two = wrapped[1];
+    two();
+                        </pre>
+                    </section>
+                    <section>
+                        <p>When a function is invoked, during runtime a slot is allocated for each variable.  In this example result, i, and n are given slots.</p>
+                    </section>
+                    <section>
+                        <p>The closures which are created in the loop store outer variables by reference not value.  So when the closure is invoked, it refers to i in it's current state, which bottomed out in the for loop at 5.  So it looks for the 6th item in the array, which doesn't exist.</p>
+                    </section>
+                    <section>
+                        <p>By invoking the function as soon as it's created we can solve this problem.</p>
+                        <pre>
+    var wrapEm = function (a) {
+        var results = [];
+        var i, n;
+        for ( i = 0, n = a.length; i < n; i++ ) {
+            results[i] = (function() {
+                return a[i];
+            })();
+        }
+        return results;
+    };
+    var wrapped = wrapEm([1, 2, 3, 4, 5]);
+    var two = wrapped[1];
+    two();
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Creating Objects</h2>
+                    </section>
+                    <section>
+                        <h3>Objects and the prototype chain</h3>
+                        <pre>
+    var o = {a: 1};
+
+    // The newly created object o has Object.prototype as its [[Prototype]]
+    // o has no own property named 'hasOwnProperty'
+    // hasOwnProperty is an own property of Object.prototype.
+    //So o inherits hasOwnProperty from Object.prototype
+    // Object.prototype has null as its prototype.
+    // o ---> Object.prototype ---> null
+
+    var a = ["yo", "whadup", "?"];
+
+    // Arrays inherit from Array.prototype
+    // (which has methods like indexOf, forEach, etc.).
+    // The prototype chain looks like:
+    // a ---> Array.prototype ---> Object.prototype ---> null
+
+    function f () {
+      return 2;
+    }
+
+    // Functions inherit from Function.prototype
+    //(which has methods like call, bind, etc.):
+    // f ---> Function.prototype ---> Object.prototype ---> null
+                        </pre>
+                    </section>
+                    <section>
+                        <p>There are a number of different ways to create objects with javascript.</p>
+                    </section>
+                    <section>
+                        <p>Object literal notation</p>
+                        <pre>
+    var myObject = {
+        name : 'Joe',
+        'course' : 'Javascript',
+        level : 55
+    }
+                        </pre>
+                    </section>
+                    <section>
+                        <p>Constructor and New Operator</p>
+                        <pre>
+    function Graph () {
+        this.vertexes = [];
+        this.edges = [];
+    };
+
+    Graph.prototype = {
+        addVertex: function(v) {
+            this.vertexes.push(v);
+        }
+    };
+
+    var g = new Graph();
+    // g is an object with own properties 'vertexes' and 'edges'.
+    // g.[[Prototype]] is the value of Graph.prototype
+    //when new Graph() is executed.
+                        </pre>
+                    </section>
+                    <section>
+                        <p>Object.create (the winner)</p>
+                        <pre>
+    var a = {a: 1};
+    // a ---> Object.prototype ---> null
+
+    var b = Object.create(a);
+    // b ---> a ---> Object.prototype ---> null
+    console.log(b.a); // 1 (inherited)
+
+    var c = Object.create(b);
+    // c ---> b ---> a ---> Object.prototype ---> null
+
+    var d = Object.create(null);
+    // d ---> null
+    console.log(d.hasOwnProperty); // undefined, because d doesn't inherit from Object.prototype
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h3>Difference between prototype and properties.</h3>
                 </section>
 
             </div>

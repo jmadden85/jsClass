@@ -1,9 +1,24 @@
-html, body {
-    height:100%;
+.reveal p, .reveal h1, .reveal h3, .reveal h2, .reveal pre {
+    font-size:110%;
 }
 
-.flexslider {
-    width:90%;
-    margin:0 auto;
-    height:100%;
+.reveal .scopeBox {
+    float:left;
+    border:1px solid black;
+    padding:5px;
+    border-radius:3px;
+    background:#f7f7f7;
+    margin:0 15px 8px 0;
+}
+
+section .stack .scopeBox {
+    float:none;
+}
+
+.reveal .stack {
+    float:left;
+}
+
+.scopeBox .row p {
+    display:inline-block;
 }
